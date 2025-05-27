@@ -9,3 +9,4 @@ Route::get('/', function () {
 
 
 Route::post();
+Route::post();

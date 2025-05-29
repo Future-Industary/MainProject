@@ -8,4 +8,6 @@ Route::get('/', function () {
 
 
 
-Route::post();
+Route::post('/',function () {
+    return 'Post received';
+});

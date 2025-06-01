@@ -6,8 +6,3 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-
-Route::post('/',function () {
-    return 'Post received';
-});

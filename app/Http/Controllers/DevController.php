@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Developers;
+use App\Models\Developer;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreDevRequests;
 use Illuminate\Support\Facades\Auth;
@@ -37,7 +37,7 @@ class DevController extends Controller
         if ($user->developers) {
             $user->developers->update($data);     // Update Data
         } else {
-            $user->developers()->create($data);   // Create Data
+            $user->developers->create($data);   // Create Data
         }
         
         return response()->json(['message' => 'The Profile Has Been Made !']);
@@ -47,7 +47,7 @@ class DevController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Developers $developers)
+    public function show(Developer $developers)
     {
         //
     }
@@ -55,7 +55,7 @@ class DevController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Developers $developers)
+    public function edit(Developer $developers)
     {
         //
     }
@@ -63,7 +63,7 @@ class DevController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Developers $developers)
+    public function update(Request $request, Developer $developers)
     {
         //
     }
@@ -71,7 +71,7 @@ class DevController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Developers $developers)
+    public function destroy(Developer $developers)
     {
         //
     }

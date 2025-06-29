@@ -32,6 +32,7 @@ class DevController extends Controller
     {
         
         $data = $request->validated();
+        if (auth()->check()) {
         $user = Auth::user();
     
         if ($user->developers) {
@@ -41,8 +42,8 @@ class DevController extends Controller
         }
         
         return response()->json(['message' => 'The Profile Has Been Made !']);
-        
     }
+}
 
     /**
      * Display the specified resource.

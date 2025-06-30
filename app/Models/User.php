@@ -6,7 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-
+use App\Models\Developer;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -17,10 +17,19 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+
+
+    protected $table = 'users';
+
+    
     protected $fillable = [
         'name',
         'email',
         'password',
+        'phone',
+        'purchase_count',
+        'status',
+        'last_login',
     ];
 
     /**
@@ -48,6 +57,8 @@ class User extends Authenticatable
 
     public function developers()
     {
-    return $this->hasOne(Developers::class);
+    return $this->hasOne(Developer::class);
     }
+
+   
 }

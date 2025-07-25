@@ -36,6 +36,11 @@ Route::get('/store', [StoreController::class, 'index']);
 
 Route::post('/products/{id}/approve',[ProductController::class,'approve']);
 
+Route::prefix('auth')->group(function () {
+    Route::post('login',[\App\Http\Controllers\AuthController::class,'login']);
+    Route::post('register',[\App\Http\Controllers\AuthController::class,'register']);
+    Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
+});
 
 #Admin APIs
 Route::post('/admin/login',[adminController::class,'login']);

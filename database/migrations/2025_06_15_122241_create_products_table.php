@@ -18,7 +18,6 @@ return new class extends Migration
             $table->integer('price');
             $table->integer('stock');
             $table->unsignedBigInteger('category_id')->nullable();
-            $table->boolean('is_approved')->default(false);
             $table->timestamps();
 
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');

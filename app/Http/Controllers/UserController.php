@@ -5,13 +5,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 
-class UsersController extends Controller
+class UserController extends Controller
 {
     public function store(Request $request)
 {
+
+    $emailRule = 'required|email|unique:users,email';
+
+if ($request->filled('id')) {
+    $emailRule .= ',' . $request->id;
+}
     $validated = $request->validate([
         'name' => 'required|string|max:255',
-        'email' => 'required|email|unique:users,email,' . $request->id,
+        'email' => $emailRule,
         'password' => 'required|string|min:6',
         'phone' => 'nullable|string|max:20',
         'purchase_count' => 'nullable|integer',
@@ -25,8 +31,7 @@ class UsersController extends Controller
     }
 
     $user = User::updateOrCreate(
-        ['email' => $validated['email']], 
-        $validated 
+        ['email' => $validated['email']],$validated 
     );
 
     return response()->json(['user' => $user], 200);

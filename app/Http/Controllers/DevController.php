@@ -35,10 +35,11 @@ class DevController extends Controller
         if (auth()->check()) {
         $user = Auth::user();
     
-        if ($user->developers) {
-            $user->developers->update($data);     // Update Data
+        if ($user->developer) {
+            $user->developer->update($data);                  // Update Data
+            $developer = $user->developer;     
         } else {
-            $user->developers->create($data);   // Create Data
+            $developer = $user->developer()->create($data);   // Create Data
         }
         
         return response()->json(['message' => 'The Profile Has Been Made !']);

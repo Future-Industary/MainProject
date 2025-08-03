@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class UserPanelController extends Controller
 {
@@ -42,7 +43,7 @@ class UserPanelController extends Controller
 
     public function show($id)
     {
-        $user = User::with('developers')->findOrFail($id);
+        $user = User::with('developer')->findOrFail($id);
 
         return response()->json([
             'name' => $user->name,

@@ -42,19 +42,17 @@ Route::prefix('auth')->group(function () {
     Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
 });
 
-#Admin APIs
-Route::post('/admin/login',[adminController::class,'login']);
+# Admin APIs
+Route::post('/admin/login', [adminController::class, 'login']);
 
 Route::middleware('auth:admin')->prefix('admin')->group(function () {
-    Route::get('/profile', function (Request $req) {
-        return $req->user();
-    });
-    Route::get('/users', [UserController::class,'showUsers']);
-    Route::get('/users/{id}', [UserController::class,'searchUser']);
-    Route::delete('/users/{id}', [UserController::class, 'destroy']);
-    Route::get('/product',[adminController::class,'showProduct']);
-    Route::get('/product/{id}',[adminController::class,'searchProduct']);
-
+    Route::get('/profile', [adminController::class, 'profile']);
+    Route::put('/profile', [adminController::class, 'updateProfile']);
+    Route::get('/users', [adminController::class, 'showUsers']);
+    Route::get('/users/{id}', [adminController::class, 'searchUser']);
+    Route::delete('/users/{id}', [adminController::class, 'destroy']);
+    Route::get('/products', [adminController::class, 'showProduct']);
+    Route::get('/products/{id}', [adminController::class, 'searchProduct']);
 });
 
 

@@ -4,8 +4,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
-
-
 use App\Http\Controllers\UserPanelController;
 use App\Http\Controllers\DeveloperPublicController;
 use App\Http\Controllers\DevController;
@@ -29,12 +27,11 @@ Route::get('/me/projects', [UserPanelController::class, 'myProjects']);
 
 Route::get('/user/{id}', [UserPanelController::class, 'show']);
 Route::post('/users/store',[UserController::class,'store']);
-
-Route::get('/product/{id}',[ProductController::class, 'show']);
-
 Route::get('/store', [StoreController::class, 'index']);
 
+
 Route::post('/products/{id}/approve',[ProductController::class,'approve']);
+Route::get('/product/{id}',[ProductController::class, 'show']);
 
 Route::prefix('auth')->group(function () {
     Route::post('login',[\App\Http\Controllers\AuthController::class,'login']);
@@ -43,16 +40,17 @@ Route::prefix('auth')->group(function () {
 });
 
 # Admin APIs
-Route::post('/admin/login', [adminController::class, 'login']);
+Route::post('/admin/login', [adminController::class, 'login'])->name('login');
 
 Route::middleware('auth:admin')->prefix('admin')->group(function () {
     Route::get('/profile', [adminController::class, 'profile']);
     Route::put('/profile', [adminController::class, 'updateProfile']);
     Route::get('/users', [adminController::class, 'showUsers']);
     Route::get('/users/{id}', [adminController::class, 'searchUser']);
-    Route::delete('/users/{id}', [adminController::class, 'destroy']);
+    Route::delete('/users/{id}', [adminController::class, 'destroyUser']);
     Route::get('/products', [adminController::class, 'showProduct']);
     Route::get('/products/{id}', [adminController::class, 'searchProduct']);
+    Route::delete('/products/{id}', [adminController::class, 'destroyProduct']);
 });
 
 

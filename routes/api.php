@@ -4,8 +4,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
-
-
 use App\Http\Controllers\UserPanelController;
 use App\Http\Controllers\DeveloperPublicController;
 use App\Http\Controllers\DevController;
@@ -29,27 +27,30 @@ Route::get('/me/projects', [UserPanelController::class, 'myProjects']);
 
 Route::get('/user/{id}', [UserPanelController::class, 'show']);
 Route::post('/users/store',[UserController::class,'store']);
-
-Route::get('/product/{id}',[ProductController::class, 'show']);
-
 Route::get('/store', [StoreController::class, 'index']);
 
+
 Route::post('/products/{id}/approve',[ProductController::class,'approve']);
+Route::get('/product/{id}',[ProductController::class, 'show']);
 
+Route::prefix('auth')->group(function () {
+    Route::post('login',[\App\Http\Controllers\AuthController::class,'login']);
+    Route::post('register',[\App\Http\Controllers\AuthController::class,'register']);
+    Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
+});
 
-#Admin APIs
-Route::post('/admin/login',[adminController::class,'login']);
+# Admin APIs
+Route::post('/admin/login', [adminController::class, 'login'])->name('login');
 
 Route::middleware('auth:admin')->prefix('admin')->group(function () {
-    Route::get('/profile', function (Request $req) {
-        return $req->user();
-    });
-    Route::get('/users', [UserController::class,'showUsers']);
-    Route::get('/users/{id}', [UserController::class,'searchUser']);
-    Route::delete('/users/{id}', [UserController::class, 'destroy']);
-    Route::get('/product',[adminController::class,'showProduct']);
-    Route::get('/product/{id}',[adminController::class,'searchProduct']);
-
+    Route::get('/profile', [adminController::class, 'profile']);
+    Route::put('/profile', [adminController::class, 'updateProfile']);
+    Route::get('/users', [adminController::class, 'showUsers']);
+    Route::get('/users/{id}', [adminController::class, 'searchUser']);
+    Route::delete('/users/{id}', [adminController::class, 'destroyUser']);
+    Route::get('/products', [adminController::class, 'showProduct']);
+    Route::get('/products/{id}', [adminController::class, 'searchProduct']);
+    Route::delete('/products/{id}', [adminController::class, 'destroyProduct']);
 });
 
 

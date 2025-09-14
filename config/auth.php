@@ -36,14 +36,18 @@ return [
     */
 
     'guards' => [
+        'admin' => [
+            'driver' => 'sanctum',
+            'provider' => 'admins',
+        ],
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
         ],
-        'admin' => [
+        'api' => [
         'driver' => 'sanctum',
-        'provider' => 'admins',
-    ],
+        'provider' => 'users',
+        ]
     ],
 
     /*

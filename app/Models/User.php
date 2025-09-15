@@ -66,5 +66,9 @@ class User extends Authenticatable
     return $this->hasOne(Developer::class);
     }
 
+    public function savedProducts() {
+    return $this->hasMany(SavedProduct::class);
+}
+
    
 }

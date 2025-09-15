@@ -132,13 +132,14 @@ class adminController extends Controller
      */
     public function showProduct()
     {
-        $product = Product::select(['id', 'title', 'description', 'images', 'category', 'created_at'])
+        $products = Product::with(['images', 'category'])
+            ->select(['id', 'title', 'description', 'category_id', 'created_at'])
             ->orderBy('created_at', 'desc')
             ->get();
 
         return response()->json([
             'message' => 'All products retrieved successfully',
-            'data' => $product
+            'data' => $products
         ]);
     }
 

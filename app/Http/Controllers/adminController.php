@@ -11,8 +11,7 @@ use Illuminate\Support\Facades\Validator;
 
 class adminController extends Controller
 {
-    /**
-     * Admin login
+    /* Admin login
      */
     public function login(Request $req)
     {
@@ -34,9 +33,9 @@ class adminController extends Controller
         ]);
     }
 
-    /**
-     * Admin registration
-     */
+    /* 
+    Admin registration
+    */
     public function register(Request $req)
     {
         $validator = Validator::make($req->all(), [
@@ -69,8 +68,7 @@ class adminController extends Controller
         ], 201);
     }
 
-    /**
-     * Show all users
+    /* Show all users
      */
     public function showUsers()
     {
@@ -84,8 +82,8 @@ class adminController extends Controller
         ]);
     }
 
-    /**
-     * Search for a specific user
+    /* 
+    Search for a specific user
      */
     public function searchUser($id)
     {
@@ -105,10 +103,10 @@ class adminController extends Controller
         ]);
     }
 
-    /**
-     * Delete a user
+    /*
+     Delete a user
      */
-    public function destroy($id)
+    public function destroyUser($id)
     {
         $user = User::find($id);
 
@@ -127,13 +125,11 @@ class adminController extends Controller
         ]);
     }
 
-    /**
-     * Show all products
+    /* Show all products
      */
     public function showProduct()
     {
-        $products = Product::with(['images', 'category'])
-            ->select(['id', 'title', 'description', 'category_id', 'created_at'])
+        $product = Product::select(['id', 'title', 'description', 'category_id', 'created_at'])
             ->orderBy('created_at', 'desc')
             ->get();
 
@@ -142,9 +138,7 @@ class adminController extends Controller
             'data' => $products
         ]);
     }
-
-    /**
-     * Search for a specific product
+    /* Search for a specific product
      */
     public function searchProduct($id)
     {
@@ -164,8 +158,26 @@ class adminController extends Controller
         ]);
     }
 
-    /**
-     * Get admin profile
+    public function destroyProduct($id)
+    {
+        $product = Product::find($id);
+
+        if (!$product) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Product not found!'
+            ], 404);
+        }
+
+        $product->delete();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'product deleted successfully'
+        ]);
+    }
+
+    /* Get admin profile
      */
     public function profile(Request $request)
     {
@@ -182,7 +194,7 @@ class adminController extends Controller
     public function updateProfile(Request $request)
     {
         $admin = $request->user();
-        
+
         $validator = Validator::make($request->all(), [
             'name' => 'sometimes|string|max:255',
             'email' => 'sometimes|string|email|max:255|unique:admin,email,' . $admin->id,

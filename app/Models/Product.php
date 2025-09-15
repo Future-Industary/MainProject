@@ -16,6 +16,10 @@ class Product extends Model
     public function category(){
         return $this->belongsTo(Category::class);
     }
+    
+    public function savedByUsers() {
+    return $this->hasMany(SavedProduct::class);
+}
 
     protected $fillable = [
         'title','price','stock','description','category_id','is_approved'

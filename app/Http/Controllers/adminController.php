@@ -135,7 +135,7 @@ class adminController extends Controller
 
         return response()->json([
             'message' => 'All products retrieved successfully',
-            'data' => $product
+            'data' => $products
         ]);
     }
     /* Search for a specific product

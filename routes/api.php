@@ -11,6 +11,12 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\adminController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ApproveController;
+use App\Http\Controllers\TicketController;
+use App\Http\Controllers\SavedProductController;
+
+
 
 Route::get('/user', function (Request $request) {
     return $request->user();}) ->middleware('auth:sanctum');
@@ -19,38 +25,54 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::post('/developer/profile', [DevController::class, 'store']);
 });
 
-
 Route::middleware(['auth:sanctum'])->group(function () {
 Route::get('/me/profile', [UserPanelController::class, 'showProfile']);
-Route::get('/me/projects', [UserPanelController::class, 'myProjects']);
+Route::get('/me/projects', [UserPanelController::class, 'myProjects']);             # Its For Phase 2 Right Now And Its Not Working Corrently
 });
 
 Route::get('/user/{id}', [UserPanelController::class, 'show']);
 Route::post('/users/store',[UserController::class,'store']);
+
+Route::get('/product/{id}',[ProductController::class, 'show']);
+
 Route::get('/store', [StoreController::class, 'index']);
 
 
 Route::post('/products/{id}/approve',[ProductController::class,'approve']);
-Route::get('/product/{id}',[ProductController::class, 'show']);
 
 Route::prefix('auth')->group(function () {
-    Route::post('login',[\App\Http\Controllers\AuthController::class,'login']);
-    Route::post('register',[\App\Http\Controllers\AuthController::class,'register']);
-    Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
+    Route::post('login',[AuthController::class,'login']);
+    Route::post('register',[AuthController::class,'register']);
+    Route::middleware('auth:sanctum')->post('logout',[AuthController::class,'logout']);
 });
 
 # Admin APIs
-Route::post('/admin/login', [adminController::class, 'login'])->name('login');
+Route::post('/admin/login', [adminController::class, 'login']);
 
 Route::middleware('auth:admin')->prefix('admin')->group(function () {
     Route::get('/profile', [adminController::class, 'profile']);
-    Route::put('/profile', [adminController::class, 'updateProfile']);
+    Route::put('/updateprofile', [adminController::class, 'updateProfile']);
     Route::get('/users', [adminController::class, 'showUsers']);
     Route::get('/users/{id}', [adminController::class, 'searchUser']);
     Route::delete('/users/{id}', [adminController::class, 'destroyUser']);
     Route::get('/products', [adminController::class, 'showProduct']);
     Route::get('/products/{id}', [adminController::class, 'searchProduct']);
     Route::delete('/products/{id}', [adminController::class, 'destroyProduct']);
+});
+
+#Ticket API's
+Route::prefix('tickets')->group(function () {
+    Route::post('/create', [TicketController::class, 'store']);
+    Route::get('/{id}', [TicketController::class, 'show']);
+    Route::middleware('auth:admin')->get('/', [TicketController::class, 'index']);
+    Route::middleware('auth:admin')->delete('/{id}', [TicketController::class, 'destroy']);
+    Route::middleware('auth:admin')->put('/approve/{id}', [TicketController::class, 'approve']);
+});
+
+Route::middleware('auth:sanctum')->prefix('indexes')->group(function () {
+    Route::get('saves', [SavedProductController::class, 'index']);
+    Route::post('save', [SavedProductController::class, 'store']);
+    Route::delete('delete/{projectId}', [SavedProductController::class, 'destroy']);
 });
 
 

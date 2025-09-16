@@ -20,4 +20,8 @@ class Product extends Model
     protected $fillable = [
         'title','price','stock','description','category_id','is_approved'
     ];
+
+    public function perofessors(){
+        return $this->belongsToMany(Professor::class,'product_professor');
+    }
 }

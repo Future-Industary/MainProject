@@ -7,10 +7,72 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserPanelController;
 use App\Http\Controllers\DeveloperPublicController;
 use App\Http\Controllers\DevController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ProfessorController;
+use App\Http\Controllers\ProductImageController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\adminController;
+use App\Http\Controllers\ArticleController;
+
+
+// Users
+Route::post('/users/store', [UserController::class, 'store']);
+Route::get('/users', [UserController::class, 'index']);
+Route::get('/users/{id}', [UserController::class, 'show']);
+Route::put('/users/{id}', [UserController::class, 'update']);
+Route::delete('/users/{id}', [UserController::class, 'destroy']);
+
+// Auth
+Route::post('/login', [UserController::class, 'login']);
+Route::post('/logout', [UserController::class, 'logout']);
+
+//Products
+Route::get('/products', [ProductController::class, 'index']);
+Route::get('/products/{id}', [ProductController::class, 'show']);
+Route::post('/products', [ProductController::class, 'store']);
+Route::put('/products/{id}', [ProductController::class, 'update']);
+Route::delete('/products/{id}', [ProductController::class, 'destroy']);
+Route::post('/products/{id}/approve', [ProductController::class, 'approve']);
+Route::get('/user/{id}', [UserPanelController::class, 'show']);
+Route::get('/store', [StoreController::class, 'index']);
+
+//Comments
+Route::get('/products/{id}/comments', [CommentController::class, 'index']);
+Route::post('/products/{id}/comments', [CommentController::class, 'store']);
+Route::put('/comments/{id}', [CommentController::class, 'update']);
+Route::delete('/comments/{id}', [CommentController::class, 'destroy']);
+
+// Categories
+Route::get('/categories', [CategoryController::class, 'index']);
+Route::get('/categories/{id}', [CategoryController::class, 'show']);
+Route::post('/categories', [CategoryController::class, 'store']);
+Route::put('/categories/{id}', [CategoryController::class, 'update']);
+Route::delete('/categories/{id}', [CategoryController::class, 'destroy']);
+
+// Product Images
+Route::get('/products/{id}/images', [ProductImageController::class, 'index']);
+Route::post('/products/{id}/images', [ProductImageController::class, 'store']);
+Route::delete('/product_images/{id}', [ProductImageController::class, 'destroy']);
+
+// Professors
+Route::get('/professors', [ProfessorController::class, 'index']);
+Route::get('/professors/{id}', [ProfessorController::class, 'show']);
+Route::post('/professors', [ProfessorController::class, 'store']);
+Route::put('/professors/{id}', [ProfessorController::class, 'update']);
+Route::delete('/professors/{id}', [ProfessorController::class, 'destroy']);
+
+// Articles
+Route::get('/articles', [ArticleController::class, 'index']);
+Route::get('/articles/{id}', [ArticleController::class, 'show']);
+Route::post('/articles', [ArticleController::class, 'store']);
+Route::put('/articles/{id}', [ArticleController::class, 'update']);
+Route::delete('/articles/{id}', [ArticleController::class, 'destroy']);
+
+
 
 Route::get('/user', function (Request $request) {
     return $request->user();}) ->middleware('auth:sanctum');
@@ -25,13 +87,8 @@ Route::get('/me/profile', [UserPanelController::class, 'showProfile']);
 Route::get('/me/projects', [UserPanelController::class, 'myProjects']);
 });
 
-Route::get('/user/{id}', [UserPanelController::class, 'show']);
-Route::post('/users/store',[UserController::class,'store']);
-Route::get('/store', [StoreController::class, 'index']);
 
 
-Route::post('/products/{id}/approve',[ProductController::class,'approve']);
-Route::get('/product/{id}',[ProductController::class, 'show']);
 
 Route::prefix('auth')->group(function () {
     Route::post('login',[\App\Http\Controllers\AuthController::class,'login']);

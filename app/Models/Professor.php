@@ -23,8 +23,8 @@ class Professor extends Model
         'confirmation',
     ];
 
-    public function projects()
+    public function products()
     {
-        return $this->belongsToMany(Project::class);
+        return $this->belongsToMany(Product::class,'product_professor');
     }
 }

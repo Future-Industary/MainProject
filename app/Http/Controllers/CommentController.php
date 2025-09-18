@@ -31,7 +31,9 @@ class CommentController extends Controller
 
         $validated = $request->validate([
             'user_id' => 'required|exists:users,id',
+            'product_id' => 'required|exists:products,id',
             'content' => 'required|string|max:1000',
+            'rating' => 'required|enteger',
         ]);
 
         $comment = new Comment();
@@ -39,6 +41,8 @@ class CommentController extends Controller
         $comment->product_id = $productId;
         $comment->content = $validated['content'];
         $comment->save();
+
+        $comment = Comment::create($comment);
 
         return response()->json($comment, 201);
     }

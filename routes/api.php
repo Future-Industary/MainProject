@@ -37,7 +37,6 @@ Route::post('/products', [ProductController::class, 'store']);
 Route::put('/products/{id}', [ProductController::class, 'update']);
 Route::delete('/products/{id}', [ProductController::class, 'destroy']);
 Route::post('/products/{id}/approve', [ProductController::class, 'approve']);
-Route::get('/user/{id}', [UserPanelController::class, 'show']);
 Route::get('/store', [StoreController::class, 'index']);
 
 //Comments
@@ -71,6 +70,8 @@ Route::get('/articles/{id}', [ArticleController::class, 'show']);
 Route::post('/articles', [ArticleController::class, 'store']);
 Route::put('/articles/{id}', [ArticleController::class, 'update']);
 Route::delete('/articles/{id}', [ArticleController::class, 'destroy']);
+
+
 
 
 

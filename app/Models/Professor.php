@@ -16,11 +16,6 @@ class Professor extends Model
         'email',
         'phone_number',
         'password',
-        'profile_image',
-        'status',
-        'last_login',
-        'teaching_experience',
-        'confirmation',
     ];
 
     public function products()

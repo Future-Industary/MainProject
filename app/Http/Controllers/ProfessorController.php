@@ -29,8 +29,10 @@ class ProfessorController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'department' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'father_name' => 'required|string|max:255',
             'email' => 'required|email|unique:professors,email',
+            'password' => 'required|string|max:255',
         ]);
 
         $professor = Professor::create($validated);

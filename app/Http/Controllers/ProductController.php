@@ -39,8 +39,6 @@ class ProductController extends Controller
         $validated = $request->validate(['title' => 'sometimes|string',
                                          'description' => 'nullable|srting',
                                          'price' => 'sometimes|numeric',
-                                         'category_id' => 'sometimes | exists:categoris,id',
-
         ]);
 
         $product->update($validated);

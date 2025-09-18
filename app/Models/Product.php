@@ -18,7 +18,7 @@ class Product extends Model
     }
 
     protected $fillable = [
-        'title','price','stock','description','category_id','is_approved'
+        'title','price','description','category_id','is_approved'
     ];
 
     public function perofessors(){
